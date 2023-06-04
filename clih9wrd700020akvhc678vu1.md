@@ -443,4 +443,4 @@ We conclude this section on working with sign-in and sign-out flow. In the next 
 
 ### Conclusion
 
-We have seen how to configure SvelteKitAuth with the OAuth provider and achieve a seamless authentication experience. Here is the [link](https://svelte-kit-auth0-next-auth.vercel.app/) for the official demo of this tutorial and [codebase](https://github.com/aakash14goplani/SvelteKit-Auth0-NextAuth). As an extension to this article, I have included one more example of authentication in SvelteKitAuth using the Salesforce provider in a separate blog post.
+We have seen how to configure SvelteKitAuth with the OAuth provider and achieve a seamless authentication experience. Here is the [link](https://svelte-kit-auth0-next-auth.vercel.app/) for the official demo of this tutorial and [codebase](https://github.com/aakash14goplani/SvelteKit-Auth0-NextAuth). As an extension to this article, I have included one more example of authentication in SvelteKitAuth using the Salesforce provider in a separate [blog post](https://blog.aakashgoplani.in/sveltekitauth-with-salesforce-oauth-provider).
