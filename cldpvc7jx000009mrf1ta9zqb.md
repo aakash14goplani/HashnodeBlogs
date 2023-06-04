@@ -64,7 +64,7 @@ someStore.set('hi');
 someStore.update((currentState: string) =>  currentState + ' world!');
 ```
 
-This is how we will be using stores with wrapper:
+This is how we will be using stores with the wrapper:
 
 ```typescript
 // 1. Define store in (say) store.ts file but this time,
@@ -76,6 +76,36 @@ export const someStore = configureStore<string>('hello');
 import { someStore } from './store';
 someStore.set('hi');
 someStore.update((currentState: string) =>  currentState + ' world!');
+```
+
+### Including custom actions
+
+We can extend this wrapper and append custom actions as well, for example:
+
+```typescript
+// Definition
+
+const counterStore = createWritableStore<number>(7);
+
+const increment = (value: number) => {
+  counterStore.update((currentValue: number) => currentValue + value);
+}
+const decrement = (value: number) => {
+  counterStore.update((currentValue: number) => currentValue - value);
+}
+const actions = { increment, decrement };
+
+export const counter = {
+  ...counterStore,
+  ...actions
+}
+
+// Usage
+
+counter.set(6); OR $counter = 6;
+counter.update((v) => v * 2); OR $counter = $counter * 2;
+counter.increment(3);
+counter.decrement(3);
 ```
 
 ### Easy Debugging
@@ -101,4 +131,4 @@ Debugging becomes super simple with this wrapper. Examples discussed below:
     
     ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1675509599332/a4f04d87-07b8-4256-a0fe-e466549d33ec.png align="center")
     
-    Some Context on *reduxify* utility: We can connect our custom stores with Redux dev tools. There is an awesome open-source utility available (https://github.com/unlocomqx/svelte-reduxify) that enables us to connect the svelte store to redux dev tools with the minimal code change. All we need is to pass our return values within *reduxify* callback.
+    Some Context on *reduxify* utility: We can connect our custom stores with Redux dev tools. There is an awesome open-source utility available (https://github.com/unlocomqx/svelte-reduxify) that enables us to connect the Svelte store to redux dev tools with the minimal code change. All we need is to pass our return values within *reduxify* callback.
