@@ -9,7 +9,7 @@ tags: navigation, sveltekit
 
 ---
 
-Currently, SvelteKit (v1.20.2) gives us a list of build files but not any list of pages. It would be great if there was a way to get the list of pages. The solution for this is to import all the `+page.svelte` files from `src/routes` and generate a list out of it.
+Currently, SvelteKit (v1.20.2) gives us a list of build files but not any list of pages. It would be great if there was a way to get the list of pages. The solution for this is to import all the `+page.svelte` files from `src/routes` and generate a list out of it. One use case of this could be to generate a **Navigation Bar**.
 
 Here is how we can do that:
 
