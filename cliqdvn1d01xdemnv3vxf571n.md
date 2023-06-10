@@ -5,6 +5,8 @@ seoDescription: "Routify to SvelteKit migration guide. Migrate routing from Rout
 datePublished: Sat Jun 10 2023 19:22:39 GMT+0000 (Coordinated Universal Time)
 cuid: cliqdvn1d01xdemnv3vxf571n
 slug: migration-guide-from-routify-to-sveltekit-router
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1686425502185/759b72c2-e608-4d1e-8333-598adf15cbe0.png
+ogImage: https://cdn.hashnode.com/res/hashnode/image/upload/v1686425579216/bb3ec0f6-8568-4b96-8d6c-247bc336d250.png
 tags: migration, sveltekit, routify
 
 ---
