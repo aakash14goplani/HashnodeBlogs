@@ -152,7 +152,7 @@ Routify provides tons of helper functions and on the contrary SvelteKit provides
                  index.svelte <- we are here
         ```
         
-    * The given URL is: [`https://google.com/in/inr?a=b&c=d`](https://se.com/myschneider/ww/en?a=b&c=d)
+    * The given URL is: [`https://google.com/in/inr?a=b&c=d`](https://google.com/in/inr?a=b&c=d)
         
         * In Routify, `$params` will be an object `{ country: in, currency: inr, a: b, c: d }`
             
@@ -209,7 +209,7 @@ Routify provides tons of helper functions and on the contrary SvelteKit provides
         
     * In Routify, we mostly use the `$page` to access *meta*, *title* and *parent* property. Since we don't have these properties with the `$page` of SvelteKit, we will have to adjust the logic in those files.
         
-    * `title` corresponds to the last fragment of the URL, i.e., if URL = [`https://www.google.com/settings`](https://se.com/myschneider/settings), title = "settings".
+    * `title` corresponds to the last fragment of the URL, i.e., if URL = [`https://www.google.com/settings`](https://www.google.com/settings), title = "settings".
         
     * `meta` is something we will have to fetch from the corresponding *layout.ts* or *layout.server.ts* file which I have discussed briefly in the next section.
         
