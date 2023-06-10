@@ -191,4 +191,4 @@ SvelteKit uses a filesystem-based router. Files named `+layout.svelte` determine
 
 * You can see the demo at [Stackblitz](https://stackblitz.com/edit/stackblitz-starters-aev7ds).
     
-* I would like to give some credit here, the idea behind generating Navigation using Vite from a Youtube channel [Web Jeda](https://youtu.be/Y_NE2R3HuOU) and the idea for generating Breadcrumb using SveleKit's store is from [Dean Fogarty's blog](https://df.id.au/technical/svelte/breadcrumbs/).
+* I would like to give some credit here, the idea behind generating Navigation using Vite is from a Youtube video by [Web Jeda](https://youtu.be/Y_NE2R3HuOU) and the idea for generating Breadcrumb using SveleKit's store is from [Dean Fogarty's blog](https://df.id.au/technical/svelte/breadcrumbs/).
