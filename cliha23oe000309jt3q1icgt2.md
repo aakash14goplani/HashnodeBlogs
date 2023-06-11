@@ -1,7 +1,7 @@
 ---
 title: "SvelteKitAuth with Salesforce OAuth provider"
-seoTitle: "SvelteKitAuth with Salesforce OAuth provider"
-seoDescription: "SvelteKitAuth with Salesforce OAuth provider"
+seoTitle: "SvelteKit authentication with SvelteKitAuth and Salesforce OAuth provi"
+seoDescription: "SvelteKit authentication with SvelteKitAuth and Salesforce OAuth provider. Authentication in SvelteKit using SvelteKitAuth and Salesforce."
 datePublished: Sun Jun 04 2023 10:25:47 GMT+0000 (Coordinated Universal Time)
 cuid: cliha23oe000309jt3q1icgt2
 slug: sveltekitauth-with-salesforce-oauth-provider
