@@ -1,7 +1,7 @@
 ---
 title: "SvelteKit Authentication using SvelteKitAuth and OAuth providers: A Comprehensive Guide"
-seoTitle: "SvelteKit Authentication using SvelteKitAuth and OAuth providers"
-seoDescription: "SvelteKit Authentication using SvelteKitAuth and OAuth providers: A Comprehensive Guide"
+seoTitle: "SvelteKit Authentication using SvelteKitAuth and Auth0"
+seoDescription: "SvelteKit Authentication using SvelteKitAuth and OAuth providers: A Comprehensive Guide. SvelteKit Authentication using SvelteKitAuth and Auth0."
 datePublished: Sun Jun 04 2023 10:21:38 GMT+0000 (Coordinated Universal Time)
 cuid: clih9wrd700020akvhc678vu1
 slug: sveltekit-authentication-using-sveltekitauth-and-oauth-providers-a-comprehensive-guide
