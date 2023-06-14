@@ -43,16 +43,16 @@ Now that we are done with the introduction, let's go through the migration proce
     
     ```bash
     src
-       routes
-          (reset)
-             folders_with_different_layouts
-             +layout.svelte
-          (main)
-             rest_of_folders
-             +layout.svelte
-       +layout.svelte
-       +page.svelte
-       +error.svelte
+      routes
+        (reset)
+          folders_with_different_layouts
+          +layout.svelte
+        (main)
+          rest_of_folders
+          +layout.svelte
+        +layout.svelte
+        +page.svelte
+        +error.svelte
     ```
     
 * The root layout file i.e. *src/routes/+layout.svelte* will be inherited by all the routes no matter what. So this file should contain the bare minimum logic (like just an empty file having only `<slot />`)or the code that will be used by all the pages.
@@ -92,6 +92,31 @@ Routify provides tons of helper functions and on the contrary SvelteKit provides
             
     * One thing that we have to take care of is the way we pass parameters in `goto()`. In Routify, we have, `$goto('url', { ...params } )` & in SvelteKit, we have to pass params as query-parameters `goto('url?a=b&c=d')`
         
+    * Here is the utility method that I have created which is in sync with Routify:
+        
+        ```typescript
+        import { goto as _goto } from '$app/navigation';
+        ...
+        export function goto(url: string, params?: { [key: string]: string }) {
+          if (params && Object.keys(params).length > 0) {
+            url = url.includes('?') ? url + '&' : url + '?';
+        
+            for (const [key, value] of Object.entries(params)) {
+              url += key + '=' + value + '&';
+            }
+          }
+          if (url.endsWith('&')) {
+            url = url.substring(0, url.length - 1);
+          }
+        
+          _goto(url);
+        }
+        
+        // USAGE
+        goto('url')
+        goto('url', { a: 'b', c: 'd' })
+        ```
+        
 2. `isActive()`
     
     * SvelteKit does not provide a utility to check if the link is active or not, we have to write our custom logic for that, which is quite simple using SvelteKit's store. Example:
@@ -107,17 +132,14 @@ Routify provides tons of helper functions and on the contrary SvelteKit provides
     * Alternatively, I have written a helper function for the same. The only caution we have to take is to pass the value of the `path` properly.
         
         ```typescript
-        export function isActive(currentUrl: URL, path: string) {
-          if (path === '/') {
-            return currentUrl.pathname === path;
-          } else {
-            return path.match(currentUrl.pathname + '($|\\/)') != null;
-          }
+        export function isActive(page: Page<Record<string, string>>, path: string) {
+          const pathname = page.url.pathname;
+          return pathname === path;
         }
         
         // invocation
         const currentUrl = new URL(window.location.href);
-        <a href="{link}" class:active={isActive(currentUrl, '/app/settings')}></a> 
+        <a href={url($page, item.link)} class:active={isActive($page, item.link)}>{item.title}</a>
         ```
         
 3. `url()`
@@ -126,20 +148,58 @@ Routify provides tons of helper functions and on the contrary SvelteKit provides
         
         ```bash
         pages
-           about
-              product
-                 index.svelte <- We are at this page
-              index.svelte
-        index.svelte <- We want to navigate here
+          profile
+            user
+              index.svelte <- We are at this page
+            index.svelte
+          index.svelte <- We want to navigate here
         ```
         
-    * Navigating from `/about` to `/`, in Routify, we have to use `<a href={$url('../../')}>HOME</a>` and `<a href={$url('../')}>ABOUT</a>` whereas in SvelteKit, it would be `<a href="../">HOME</a>` and `<a href="./">ABOUT</a>`
+    * Navigating from `/profile/user` to `/profile`:
         
+        * In Routify: `<a href={$url('../')}>To Profile Page</a>`
+            
+        * In SvelteKit: `<a href='/profile'>To Profile Page</a>`
+            
+    * Navigating from `/profile/user` to `/`:
+        
+        * In Routify: `<a href={$url('../../')}>To Home Page</a>`
+            
+        * In SvelteKit: `<a href='/'>To Home Page</a>`
+            
     * From the above example, it is evident that in Routify when we want to navigate from page-A to page-B, page-A will be considered as the root page & navigation path should be calculated from that node. Whereas in SvelteKit, *src/routes/+page.svelte* is always considered as the root page and navigation will be calculated from that node.
         
-    * Because of this distinction, we will have to remove all occurrences of `$url` and replace with absolute path calculated from root page.
+    * Here is the utility method for the same:
         
-    * I was not able to come up with a generic helper function for this use case, if you have any ideas, do mention that in the comment section below!
+        ```typescript
+        export function url(page: Page<Record<string, string>>, path: string) {
+          const pathname = page.url.pathname;
+        
+          if (path == null) {
+            return path;
+          } else if (path.match(/^\.\.?\//)) {
+            // Relative path (starts with `./` or `../`)
+            const [, breadcrumbs, relativePath] = path.match(/^([./]+)(.*)/) as string[];
+            let dir = pathname.replace(/\/$/, '');
+            const traverse = breadcrumbs.match(/\.\.\//g) || [];
+            // if this is a page, we want to traverse one step back to its folder
+            traverse.forEach(() => (dir = dir.replace(/\/[^/]+\/?$/, '')));
+            path = `${dir}/${relativePath}`.replace(/\/$/, '');
+            path = path || '/'; // empty means root
+          else if (path.match(/^\//)) {
+            // Absolute path (starts with `/`)
+            return path;
+          } else {
+            // Unknown (no named path)
+            return path;
+          }
+        
+          return path;
+        }
+        
+        // USAGE
+        <a href={url($page, item.link)} class:active={isActive($page, item.link)}>{item.title}</a>
+        ```
         
 4. `params`
     
@@ -147,30 +207,29 @@ Routify provides tons of helper functions and on the contrary SvelteKit provides
         
         ```bash
         pages
-           [country]
-              [currency]
-                 index.svelte <- we are here
+          [country]
+            [currency]
+              index.svelte <- we are here
         ```
         
-    * The given URL is: [`https://google.com/in/inr?a=b&c=d`](https://google.com/in/inr?a=b&c=d)
+    * The given URL is: `https://google.com/in/inr?a=b&c=d`
         
         * In Routify, `$params` will be an object `{ country: in, currency: inr, a: b, c: d }`
             
-        * In SvelteKit, for getting that same output, we will have to use the `$page` store. Example: `$page.params` will be an object `{ country: in, currency: inr }` and `$page.url.searchParams('a')` will output `b` or `$`[`page.url.search`](http://page.url.search) will give us `?a=b&c=d`
+        * In SvelteKit, for getting that same output, we will have to use the `$page` store. Example: `$page.params` will be an object `{ country: in, currency: inr }` and `$page.url.searchParams('a')` will output `b` or `$page.url.search` will give us `?a=b&c=d`
             
     * Alternatively, I have written a helper function:
         
         ```typescript
-        export function getParams(page: Readable<Page<Record<string, string>, string | null>>) {
-          const pageValue = get(page);
+        export function getParams(page: Page<Record<string, string>, string | null>) {
           let returnValue = {};
         
-          const optionalParams = pageValue.params;
+          const optionalParams = page.params;
           if (Object.keys(optionalParams).length > 0) {
             returnValue = { ...returnValue, ...optionalParams };
           }
         
-          const searchParams = pageValue.url.search;
+          const searchParams = page.url.search;
           if (searchParams.length > 1) {
             const temp = Object.fromEntries(new URLSearchParams(searchParams));
             returnValue = { ...returnValue, ...temp };
@@ -209,7 +268,7 @@ Routify provides tons of helper functions and on the contrary SvelteKit provides
         
     * In Routify, we mostly use the `$page` to access *meta*, *title* and *parent* property. Since we don't have these properties with the `$page` of SvelteKit, we will have to adjust the logic in those files.
         
-    * `title` corresponds to the last fragment of the URL, i.e., if URL = [`https://www.google.com/settings`](https://www.google.com/settings), title = "settings".
+    * `title` corresponds to the last fragment of the URL, i.e., if URL = `https://www.google.com/settings`, title = "settings".
         
     * `meta` is something we will have to fetch from the corresponding *layout.ts* or *layout.server.ts* file which I have discussed briefly in the next section.
         
@@ -219,36 +278,66 @@ Routify provides tons of helper functions and on the contrary SvelteKit provides
     
     * `$layout`, like `$page` is used to access `children` and `meta` properties. We don't have any equivalent functionality in SvelteKit.
         
-    * I have discussed briefly `meta` in the next section, now I will walk you through the process of fetching `children` of the given layout:
+    * I have discussed briefly `meta` in the next section, now I will walk you through the process of fetching `children` of the given layout. **Make sure that this snippet is used in *+layout.svelte* files only**:
         
         ```typescript
-        export function getChildren(modules: Record<string, () => Promise<unknown>>) {
+        export function getLayoutChildren(
+          routeId: string,
+          modules: Record<string, () => Promise<unknown>>
+        ) {
           let returnValue: Array<{ path: string; title: string }> = [];
+          let root = '/';
+        
+          // remove group layout from path
+          const removeGroupLayouts = (path: string): string => {
+            let newPath = path;
+            if (path.includes('(')) {
+              newPath = newPath.substring(0, newPath.indexOf('(')) + newPath.substring(newPath.indexOf(')/') + 1);
+            }
+            if (newPath.includes('(')) {
+              return removeGroupLayouts(newPath);
+            }
+            return newPath.replaceAll('//', '/');
+          };
+        
+          // append layout (file) name to the path
+          const rootLayout = (path: string): string => {
+            if (routeId.includes(path)) {
+              // return difference
+              return routeId.split(path).join('');
+            }
+            return '/';
+          };
+        
+          routeId = removeGroupLayouts(routeId);
         
           for (const [key, value] of Object.entries(modules)) {
             const keyStartIndex = key.indexOf('./') + 1;
             const keyEndIndex = key.indexOf('/+page');
             if (keyEndIndex > keyStartIndex) {
-              // +1 to remove `/` from title
               let title = key.substring(keyStartIndex + 1, keyEndIndex);
+              if (routeId.length > 1 && root.length < 2) {
+                // fetch root layout to be appended with path
+                root = rootLayout(title);
+              }
               if (title.includes('/')) {
-                // in case of optional params /[country]/[currency]
+                // in case of optional params /[country]/[language]
                 title = title.substring(title.lastIndexOf('/') + 1);
               }
-              const tempValue = value.toString();
+        
+              const tempValue = removeGroupLayouts(value.name);
               const valueEndIndex = tempValue.indexOf('/+page');
-        
-              let valueStartIndex = 0;
-              let path = '';
-        
-              valueStartIndex = tempValue.includes('/(')
-                ? (valueStartIndex = tempValue.indexOf(')/') + 1)
-                : (valueStartIndex = tempValue.indexOf('routes') + 7); // routes -> 6, +1 as usual for substring = 7
-        
-              path = tempValue.substring(valueStartIndex, valueEndIndex);
+              const path = tempValue.substring(2, valueEndIndex);
         
               returnValue = [...returnValue, { path, title }];
             }
+          }
+          // append layout to the path
+          if (root.length > 0) {
+            returnValue = returnValue.map((value) => {
+              const appendValue = root === '/' && routeId.length > 2 ? routeId + '/' : root;
+              return { path: appendValue + value.path, title: value.title };
+            });
           }
         
           return returnValue;
@@ -259,13 +348,14 @@ Routify provides tons of helper functions and on the contrary SvelteKit provides
         
         ```svelte
         <script lang="ts">
-        import { getChildren } from "$lib/utility/router-helper";
-        import { onMount } from "svelte";
+          import { page } from '$app/stores';
+          import { getLayoutChildren } from '$lib/utility/router-helper';
+          import { onMount } from 'svelte';
         
-        onMount(() => {
-          const modules = import.meta.glob('./**/+page.svelte');
-          const children = getChildren(modules);
-        })
+          onMount(() => {
+            const modules = import.meta.glob('./**/+page.svelte');
+            const children = getLayoutChildren($page.route.id as string, modules);
+          })
         </script>
         ```
         
@@ -280,7 +370,7 @@ Routify provides tons of helper functions and on the contrary SvelteKit provides
               user
                 +page.svelte
             +page.svelte
-            +layout.svelte
+            +layout.svelte <- invoked here
         ```
         
         ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1686416055215/e7905bfb-6b1c-416d-bf59-83afef011802.png align="center")
@@ -295,15 +385,15 @@ Routify provides tons of helper functions and on the contrary SvelteKit provides
         
         ```svelte
         src
-           pages
-              admin
-                 user
-                    index.svelte
-                    _fallback.svelte
-                 index.svelte
-                 _fallback.svelte
+          pages
+            admin
+              user
+                index.svelte
+                _fallback.svelte
               index.svelte
               _fallback.svelte
+            index.svelte
+            _fallback.svelte
         ```
         
     * If we enter the URL `/admin/user/foo-bar`, in Routify, *\_fallback* within the *user* will be invoked and the value of `$leftover` will be "foo-bar". Similarly, for URL `/admin/foo-bar`, *\_fallback* within *admin* will be invoked and the value of `$leftover` will be "foo-bar" and so on...
@@ -333,7 +423,18 @@ In Routify, to generate the breadcrumbs and a Navigation bar, we have traversed 
     
     ```typescript
     export let data;
-    const pageCategory = data.category; // outputs "Blog"
+    const category = data.category; // outputs "Blog"
+    ```
+    
+* We can also fetch metadata from parent routes:
+    
+    ```typescript
+    export const load = (async ({ data }) => {
+      return {
+        ...data,
+        parentCategory: 'From Parent'
+      }
+    }) satisfies LayoutLoad;
     ```
     
 
