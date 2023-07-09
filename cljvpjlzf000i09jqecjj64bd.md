@@ -38,8 +38,7 @@ On the other hand, the state of the server is shared with all the users simultan
 
 Here are a few alternatives using which we can mitigate this problem:
 
-1. **Avoid side effects in the load functions.**
-    
+**(1) Avoid side effects in the load functions.**
 
 * This is an example from [SvelteKit's documentation](https://kit.svelte.dev/docs/state-management#no-side-effects-in-load) on how we should avoid setting store values within the load function. Instead, we can return data from the load function and let the client handle data accordingly.
     
@@ -82,8 +81,7 @@ Here are a few alternatives using which we can mitigate this problem:
     ```
     
 
-1. **Use context API**
-    
+**(2) Use context API**
 
 * [SvelteKit uses context API](https://kit.svelte.dev/docs/state-management#using-stores-with-context) behind the scenes for application stores like `$page` `$navigation` etc.
     
@@ -127,8 +125,7 @@ Here are a few alternatives using which we can mitigate this problem:
     * The context is passed to the child components only, you cannot do `getContext` on a sibling component.
         
 
-1. **Using Custom Stores with slight modifications to ensure stores are not global**
-    
+**(3) Using Custom Stores with slight modifications to ensure stores are not global**
 
 * Another solution is to create a custom store in such a way that it is unique for every client. Although I haven't tried these solutions personally, they are worth sharing:
     
@@ -141,8 +138,7 @@ Here are a few alternatives using which we can mitigate this problem:
     * [Creating a custom store and safe variables by isolating the stores across requests, enabling file-based stores to exist](https://github.com/sveltejs/kit/discussions/9878) by *Albert Marashi.*
         
 
-1. **Using Asynchronous Local Storage**
-    
+**(4) Using Asynchronous Local Storage**
 
 * If there is a situation where you must preserve state per client then NodeJS native [Asynchronous Local Storage](https://nodejs.org/api/async_context.html#new-asynclocalstorage) can be useful. However, this should be viewed as the last alternative when none of the solutions worked for you.
     
