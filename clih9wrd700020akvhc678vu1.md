@@ -382,9 +382,10 @@ We conclude this section on working with custom providers. In the next section, 
         import { signOut } from '@auth/sveltekit/client';
         
         <button on:click={() => signOut()} class="button">Sign out</button>
+        <button on:click={() => signOut({ redirect: true, callbackUrl: 'url-post-logout' })} class="button">Sign out with optional params</button>
         ```
         
-    * You can programmatically `signOut()` user as well as using code snippet mentioned in `signIn()` section, just replace `/auth/signin` with `/auth/signout`
+    * **NOTE**: For `signOut` flow, we cannot log out user programmatically. For `signOut` corresponding API is `/auth/signout` but that seems to have some problems as of today (25th July 23). If we hit this API, the call goes through successfully but the user session is not invalidated i.e. `session-token` cookie persists. I've logged this [bug](https://github.com/nextauthjs/next-auth/issues/8134) with the core team and I'll update this section as soon as I hear back from them!
         
 
 We conclude this section on working with sign-in and sign-out flow. In the next section, I am going to demonstrate how to manage sessions in the application.
