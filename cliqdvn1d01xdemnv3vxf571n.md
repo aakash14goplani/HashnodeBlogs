@@ -5,7 +5,6 @@ seoDescription: "Routify to SvelteKit migration guide. Migrate routing from Rout
 datePublished: Sat Jun 10 2023 19:22:39 GMT+0000 (Coordinated Universal Time)
 cuid: cliqdvn1d01xdemnv3vxf571n
 slug: migration-guide-from-routify-to-sveltekit-router
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1686480965853/b17ce2ec-061a-4586-8961-7befb32cc6b1.png
 ogImage: https://cdn.hashnode.com/res/hashnode/image/upload/v1686481004933/fbe42684-cc91-4562-b28c-d21925373650.png
 tags: migration, sveltekit, routify
 
@@ -398,7 +397,9 @@ Routify provides tons of helper functions and on the contrary SvelteKit provides
         
     * If we enter the URL `/admin/user/foo-bar`, in Routify, *\_fallback* within the *user* will be invoked and the value of `$leftover` will be "foo-bar". Similarly, for URL `/admin/foo-bar`, *\_fallback* within *admin* will be invoked and the value of `$leftover` will be "foo-bar" and so on...
         
-    * In SvelteKit, if 404 occurs, control always goes to *src/routes/+error.svelte*, there is no concept of redirecting users to specific error pages in 404 scenarios and hence implementing a helper/utility for this feature is not possible. If you come across any hack, do let me know in the comments section!
+    * In SvelteKit, if 404 occurs, control always goes to *src/routes/+error.svelte*, there is no concept of redirecting users to specific error pages in 404 scenarios and hence implementing a helper/utility for this feature is not possible.
+        
+    * The closest possible solution that I can think of is the [rest parameters](https://kit.svelte.dev/docs/advanced-routing#rest-parameters) in routing. We can configure our route as `src/routes/admin/[...leftover]/+page.svelte` With this approach we can handle the request per route basis but again as said before this is the closest solution and not the exact one. If you come across any hack, do let me know in the comments section!
         
 
 #### Breadcrumb and Dynamic Navigation
