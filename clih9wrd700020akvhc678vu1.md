@@ -100,7 +100,7 @@ Before we start with coding, first we need to have an Auth0 application. Let's c
     
 * You should reach the dashboard page now. Click on the "Settings" tab.
     
-    ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1683708393347/d830e822-7f48-4789-9eb3-bedd49a130fc.png align="center")
+    ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1690470802329/91600809-1872-4798-8282-aa04e9da986e.png align="center")
     
 * Scroll down to the section "Application URIs" -&gt; "Allowed Callback URLs". A callback URL is a URL that is invoked after OAuth authorization for the consumer. SvelteKitAuth has a specific pattern for callback URL which is `<origin>/auth/callback/providerId` We must follow this pattern. We will enter two values here, one which we use for local development `http://localhost:4000/auth/callback/auth0` and the other one where we hoist our site `https://my-app.vercel.app/auth/callback/auth0` we can also use a wildcard pattern to whitelist entire domain: `https://*.vercel.app`.
     
@@ -122,7 +122,7 @@ Before we begin, let's install two dependencies:
 "@auth/sveltekit": "^0.2.1"
 ```
 
-As I have mentioned earlier that SvelteKitAuth has built-in support for the most popular sign-in services like Google, GitHub, Auth0, Salesforce etc. we will be using built-in [Auth0 provider](https://next-auth.js.org/providers/auth0).
+As I have mentioned earlier that SvelteKitAuth has built-in support for the most popular sign-in services like Google, GitHub, Auth0, Salesforce etc. We will be using a built-in [Auth0 provider](https://next-auth.js.org/providers/auth0).
 
 Here is the code snippet that we will be using in *src/hooks.server.ts.* Let us now deep dive into `Auth0Provider` and the properties that are used within the provider.
 
@@ -141,8 +141,8 @@ const config: SvelteKitAuthConfig = {
       name: 'Auth0',
       clientId: '-client-id-',
       clientSecret: '-client-secret-',
-      issuer: 'https://dev-24ovxhwj2j6opsex.us.auth0.com/',  // <- remember to add trailing `/` 
-      wellKnown: 'https://dev-24ovxhwj2j6opsex.us.auth0.com/.well-known/openid-configuration'
+      issuer: 'https://dev-****.auth0.com/',  // <- remember to add trailing `/` 
+      wellKnown: 'https://dev-****.auth0.com/.well-known/openid-configuration'
     }) as Provider
   ],
   secret: '-any-random-string-',
@@ -159,23 +159,23 @@ export const handle = SvelteKitAuth(config) satisfies Handle;
     
 * **name**: This is an optional property where-in you can provide any string value, preferred one is the name of the OAuth provider you're using i.e. "Auth0"
     
-* **clientId**: is a unique identifier that is assigned to an application when it registers with an OAuth 2.0 service provider. The `clientId` is used by the application to authenticate itself to the service provider and to obtain access tokens. Client Id value can be obtained from the OAuth application. In your Auth0 application go to -&gt; settings tab -&gt; Basic Information Section -&gt; Get Client ID string.
+* **clientId**: is a unique identifier that is assigned to an application when it registers with an OAuth 2.0 service provider. The `clientId` is used by the application to authenticate itself to the service provider and to obtain access tokens. Client Id value can be obtained from the OAuth application. In your Auth0 application go to -&gt; *Settings* tab -&gt; *Basic Information Section* -&gt; Get *Client ID* string.
     
 * **clientSecret**: is a secret key that is used to protect the client ID. The `clientSecret` is not shared with the service provider and must be kept confidential by the application. Client Secret value similar to Client ID can be retrieved from the Basic Information Section of your Auth0 application.
     
 * **issuer**: The issuer is the domain of your Auth0 application which can be fetched from the Basic Information Section of your Auth0 application.
     
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1683746295868/6a28dcc2-cc11-4ca3-a4eb-49464878d331.png align="center")
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1690471007022/6c04ed69-0697-40f3-89d2-f156e4336a40.png align="center")
 
-* **wellKnown**: The wellKnow URL is a preassigned stable end-point that a server uses every time it runs. It contains information about where to fetch tokens and user information post-authentication.
+* **wellKnown**: The *wellKnow* URL is a preassigned stable end-point that a server uses every time it runs. It contains information about where to fetch tokens and user information post-authentication.
     
 
 We conclude this section on working with built-in providers. In the next section, I am going to demonstrate how to work with a custom provider.
 
 #### Configuring SvelteKitAuth custom provider
 
-Before we begin, I want to point out that this section aims to showcase how a custom provider can be configured with SvelteKitAuth. In the previous section, we have already configured built-in providers, so if you want you can skip this section - **Initiating sign-in and sign-out flow**.
+Before we begin, I want to point out that this section aims to showcase how a custom provider can be configured with SvelteKitAuth. In the previous section, we have already configured built-in providers, so if you want you can skip this section - [**Initiating sign-in and sign-out flow**](https://blog.aakashgoplani.in/sveltekit-authentication-using-sveltekitauth-and-oauth-providers-a-comprehensive-guide#heading-initiating-sign-in-and-sign-out-flow).
 
 Here is the code snippet that we will be using in *src/hooks.server.ts.* Let us now deep dive into custom providers and the properties that are used within the provider.
 
@@ -187,8 +187,8 @@ const config: SvelteKitAuthConfig = {
     type: 'oidc',
     clientId: '-client-id-',
     clientSecret: '-client-secret-',
-    issuer: 'https://dev-24ovxhwj2j6opsex.us.auth0.com/', // <- remember to add trailing `/` 
-    wellKnown: 'https://dev-24ovxhwj2j6opsex.us.auth0.com/.well-known/openid-configuration'
+    issuer: 'https://dev-***.auth0.com/', // <- remember to add trailing `/` 
+    wellKnown: 'https://dev-***.auth0.com/.well-known/openid-configuration'
   }],
   secret: 'cfc1bb18fc9ba615ea8a3f6db2df089c',
   debug: false,
@@ -200,15 +200,15 @@ const config: SvelteKitAuthConfig = {
 export const handle = SvelteKitAuth(config) satisfies Handle;
 ```
 
-* `id`, `name`, `clientId`, `clientSecret`, `issuer` and `wellKnown` - these configuration remains the same as they were discussed in the last section, the focus here will be on `type` property. The `type` property specifies the type of authentication mechanism, allowed values are: "oidc", "oauth", "credentials" and "email".
+* `id`, `name`, `clientId`, `clientSecret`, `issuer` and `wellKnown` - these configuration remains the same as they were discussed in the last section, the focus here will be on `type` property. The `type` property specifies the type of authentication mechanism, allowed values are: "*oidc*", "*oauth*", "*credentials*" and "*email*".
     
 * If your Provider is OpenID Connect (OIDC) compliant, the recommendation is to use the `wellKnown` option instead. OIDC usually returns an `id_token` from the `token` endpoint. `SvelteKitAuth` can decode the `id_token` to get the user information, instead of making an additional request to the `userinfo` endpoint.
     
-* In case your provider is not OIDC complaint, we have the option to customize the configuration by using a combination of the following properties. You can find more information in the [docs](https://next-auth.js.org/configuration/providers/oauth).
+* In case your provider is not OIDC compliant, we have the option to customize the configuration by using a combination of the following properties. You can find more information in the [docs](https://next-auth.js.org/configuration/providers/oauth).
     
     * **authorization**: This is the URL for authentication. There are two ways to use this option:
         
-        1. You can either set `authorization` to be a full URL, like `"`[`https://example.com/oauth/authorization?scope=email`](https://example.com/oauth/authorization?scope=email)`"`.
+        1. You can either set `authorization` to be a full URL, like `"https://example.com/oauth/authorization?scope=email"`.
             
         2. Use an object with `url` and `params` like so
             
@@ -221,7 +221,7 @@ export const handle = SvelteKitAuth(config) satisfies Handle;
             
     * **token:** This is the URL that will fetch token information. There are three ways to use this option:
         
-        1. You can either set `token` to be a full URL, like `"`[`https://example.com/oauth/token?some=param`](https://example.com/oauth/token?some=param)`"`.
+        1. You can either set `token` to be a full URL, like `"https://example.com/oauth/token?some=param"`.
             
         2. Use an object with `url` and `params` like so
             
@@ -253,7 +253,7 @@ export const handle = SvelteKitAuth(config) satisfies Handle;
             
     * **userinfo**: A `userinfo` endpoint returns information about the logged-in user. It is not part of the OAuth specification but is usually available for most providers. There are three ways to use this option:
         
-        1. You can either set `userinfo` to be a full URL, like `"`[`https://example.com/oauth/userinfo?some=param`](https://example.com/oauth/userinfo?some=param)`"`.
+        1. You can either set `userinfo` to be a full URL, like `"https://example.com/oauth/userinfo?some=param"`.
             
         2. Use an object with `url` and `params` like so
             
@@ -301,146 +301,261 @@ We conclude this section on working with custom providers. In the next section, 
 
 ### Initiating sign-in and sign-out flow
 
-* **signIn()** - Client-side method to initiate a signin flow or send the user to the signin page listing all possible providers. It automatically Automatically adds the CSRF token to the request.
-    
-    * Use signIn() method with the following properties:
-        
-        * **providerId**: This is the "id" property that we have specified in the previous sections. This is optional, if we omit this, it defaults to the first id property specified in the SvelteKit configuration.
-            
-        * **options**: This is an optional property where we can specify the callbackURL i.e. the URL to which the user should be redirected once signin is successful. In some cases, you might want to deal with the signin response on the same page and disable the default redirection. For example, if an error occurs (like wrong credentials given by the user), you might want to handle the error on the same page. For that, you can pass `redirect: false` in the second parameter object.
-            
-        * **Additional parameters**: It is also possible to pass additional parameters to the `/authorize` endpoint through the third argument of `signIn()`.
-            
-        * Although this is more than enough but if you still want to deep dive into more options, you can read more configuration details in the [official documentation](https://next-auth.js.org/getting-started/client#redirects-to-sign-in-page-when-clicked).
-            
-        
-        ```typescript
-        import { signIn } from '@auth/sveltekit/client';
-        
-        <button on:click={() => signIn(
-            'auth0', {
-              redirect: false,
-              callbackUrl: 'http://localhost:4000/about'
-            },
-            {
-              scope: 'api openid profile email'
-            }
-        )}>Sign In with Auth0</button>
-        ```
-        
-    * You can also programmatically sign-in user
-        
-        ```typescript
-        import type { PageServerLoad } from './$types';
-        import { redirect } from '@sveltejs/kit';
-        
-        export const load = (async ({ fetch, locals }) => {
-        	let url = '';
-        	try {
-        		const session = await locals.getSession();
-        		if (!session?.user) {
-        			const tokenCall = await fetch('/auth/csrf');
-        			const csrfTokenResponse = await new Response(tokenCall.body).json();
-        			const csrfToken = csrfTokenResponse.csrfToken;
-        
-        			const params = new URLSearchParams();
-              params.append('scope', 'api openid profile email');
-        
-        			const formData = new URLSearchParams();
-        			formData.append('redirect', 'false');
-        			formData.append('csrfToken', csrfToken);
-        
-        			const signInRequest = await fetch('/auth/signin/auth0? ' + params.toString(), {
-        				method: 'POST',
-        				headers: {
-        					'Content-Type': 'application/x-www-form-urlencoded',
-        					'X-Auth-Return-Redirect': '1'
-        				},
-        				body: formData.toString()
-        			});
-        			const signInResponse = await new Response(signInRequest.body).json();
-        
-        			if (signInResponse?.url) {
-        				url = signInResponse.url;
-        			}
-        		}
-        	} catch (e: any) {
-        		console.log('Exception thrown while auto-sign-in: ', e);
-        	}
-        
-        	if (url) {
-        		throw redirect(302, url);
-        	}
-        }) satisfies PageServerLoad;
-        ```
-        
-* **signOut()**: Signs the user out, by removing the session cookie. Automatically adds the CSRF token to the request.
-    
-    * Like `signIn()` method, you can pass a callbackURL and redirect option. More details in the [official documentation](https://next-auth.js.org/getting-started/client#signout)
-        
-        ```typescript
-        import { signOut } from '@auth/sveltekit/client';
-        
-        <button on:click={() => signOut()} class="button">Sign out</button>
-        <button on:click={() => signOut({ redirect: true, callbackUrl: 'url-post-logout' })} class="button">Sign out with optional params</button>
-        ```
-        
-    * **NOTE**: For `signOut` flow, we cannot log out user programmatically. For `signOut` corresponding API is `/auth/signout` but that seems to have some problems as of today (25th July 23). If we hit this API, the call goes through successfully but the user session is not invalidated i.e. `session-token` cookie persists. I've logged this [bug](https://github.com/nextauthjs/next-auth/issues/8134) with the core team and I'll update this section as soon as I hear back from them!
-        
+#### Sign-in Flow
 
-We conclude this section on working with sign-in and sign-out flow. In the next section, I am going to demonstrate how to manage sessions in the application.
+`signIn()` is the client-side method to initiate a sign-in flow or send the user to the sign-in page listing all possible providers. It automatically Automatically adds the CSRF token to the request.
+
+Use `signIn()` method with the following properties:
+
+* **providerId**: This is the "id" property that we have specified in the previous sections. This is optional, if we omit this, it defaults to the first id property specified in the SvelteKit configuration.
+    
+* **options**: This is an optional property where we can specify the *callbackURL* i.e. the URL to which the user should be redirected once sign-in is successful. In some cases, you might want to deal with the sign-in response on the same page and disable the default redirection. For example, if an error occurs (like wrong credentials given by the user), you might want to handle the error on the same page. For that, you can pass `redirect: false` in the second parameter object.
+    
+* **Additional parameters**: It is also possible to pass additional parameters to the `/authorize` endpoint through the third argument of `signIn()`.
+    
+
+Although this is more than enough if you still want to deep dive into more options, you can read more configuration details in the [official documentation](https://next-auth.js.org/getting-started/client#redirects-to-sign-in-page-when-clicked).
+
+```svelte
+<script lang="ts">
+  import { signIn } from '@auth/sveltekit/client';
+</script>
+
+<button on:click={() => signIn(
+  'auth0', {
+    redirect: false,
+    callbackUrl: 'http://localhost:4000/about'
+  },
+  {
+    scope: 'api openid profile email'
+  }
+)}>Sign In with Auth0</button>
+```
+
+You can also programmatically sign-in user:
+
+```typescript
+import type { PageServerLoad } from './$types';
+import { redirect } from '@sveltejs/kit';
+
+export const load = (async ({ fetch, locals }) => {
+  let url = '';
+  try {
+    const session = await locals.getSession();
+    if (!session?.user) {
+      const tokenCall = await fetch('/auth/csrf');
+      const csrfTokenResponse = await new Response(tokenCall.body).json();
+      const csrfToken = csrfTokenResponse.csrfToken;
+
+      const params = new URLSearchParams();
+      params.append('scope', 'api openid profile email');
+
+      const formData = new URLSearchParams();
+      formData.append('redirect', 'false');
+      formData.append('csrfToken', csrfToken);
+
+      const signInRequest = await fetch('/auth/signin/auth0? ' + params.toString(), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-Auth-Return-Redirect': '1'
+        },
+          body: formData.toString()
+      });
+      const signInResponse = await new Response(signInRequest.body).json();
+
+      if (signInResponse?.url) {
+        url = signInResponse.url;
+      }
+    }
+  } catch (e: any) {
+    console.log('Exception thrown while auto-sign-in: ', e);
+  }
+
+  if (url) {
+    throw redirect(302, url);
+  }
+}) satisfies PageServerLoad;
+```
+
+**NOTE**: In the above code snippet, if you provide the option of *callbackUrl* within *formData* that will be the output of *signInResponse,* else it will default to the URL of the page that initiated the sign-in request!
+
+#### Sign-out Flow
+
+The `signOut()` logs the user out, by removing the session cookie. Automatically adds the CSRF token to the request.
+
+Like `signIn()` method, you can pass a *callbackURL* and *redirect* option. More details in the [official documentation](https://next-auth.js.org/getting-started/client#signout)
+
+```svelte
+<script lang="ts">
+  import { signOut } from '@auth/sveltekit/client';
+</script>
+
+<button on:click={() => signOut()} class="button">Sign out</button>
+<!-- OR -->
+<button on:click={() => signOut({
+  redirect: true,
+  callbackUrl: 'url-post-logout'
+})} class="button">Sign out with optional params</button>
+```
+
+**NOTE**: If you don't provide the *callbackUrl* option, it will redirect you to the page that initiated the sign-in request.
+
+You can programmatically sign out the user as well:
+
+```typescript
+import { redirect } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
+
+export const load = (async ({ fetch, locals, url: _url }) => {
+  let url = '';
+  try {
+    const session = await locals.getSession();
+    if (session && !!session.user.access_token) {
+      const tokenCall = await fetch('/auth/csrf');
+      const csrfTokenResponse = await new Response(tokenCall.body).json();
+      const csrfToken = csrfTokenResponse.csrfToken;
+
+      const formData = new URLSearchParams();
+      formData.append('redirect', 'false');
+      formData.append('callbackUrl', `${_url.origin}`);
+      formData.append('csrfToken', csrfToken);
+	
+      const signOutRequest = await fetch('/auth/signout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-Auth-Return-Redirect': '1'
+        },
+        body: formData.toString()
+      });
+      const signOutResponse = await new Response(signOutRequest.body).json();
+
+      if (signOutResponse?.url) {
+        url = signOutResponse.url;
+      }
+    }
+  } catch (e: any) {
+    console.log('Exception thrown while auto-sign-out: ', e);
+  }
+
+  if (url) {
+    throw redirect(302, url);
+  }
+}) satisfies PageServerLoad;
+```
+
+NOTE: After signing out, we must reload the page. If we use inbuild `signOut()` the SvelteKitAuth auto reloads the page and redirects to the *callbackUrl* or to the URL that initiated the sign-in request. Since we programmatically logged users out, it is our responsibility to reload the page once.
+
+```svelte
+<script lang="ts">
+  import { onMount } from 'svelte';
+  import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
+
+  onMount(() => {
+    // session-storage ensures that we reload only once!
+    const isAppReloaded = sessionStorage.getItem('reloadApp') || 'false';
+    if (isAppReloaded === 'false') {
+      sessionStorage.setItem('reloadApp', 'true');
+      window.location.reload();
+    }
+  });
+</script>
+```
+
+#### Sign-out user from the Application vs Sign-out user from OAuth provider
+
+When you trigger a `signOut()` the SvelteKitAuth logs the user out from your application by clearing `session-token` cookie and resetting `Session` to `null`. But the user is still active in the OAuth provider's session layer. You can read more about this in the official [Auth0 documentation](https://auth0.com/docs/authenticate/login/logout) and this holds for all the OAuth providers.
+
+You can verify the above statement in the following way:
+
+* If you log in for the very first time using the `signIn()`, you'll see a pop-up from your OAuth provider for credentials.
+    
+* Now log out using `signOut()` Verify that the `session-token` and the `Session` are nullified.
+    
+* Log in back with the `signIn()` This time, you won't see any pop-up asking for credentials, instead you will be auto-logged the moment you press the sign-in button!
+    
+
+This proves that the user session was still active in the Auth0 session layer. If you want to clear the user session on Auth0's session layer as well, you will have to logout the user out of Auth0 using the OIDC endpoint.
+
+```svelte
+<script lang="ts">
+  import { onMount } from 'svelte';
+  import { page } from '$app/stores';
+
+  onMount(async () => {
+    const idToken = $page.data?.session?.user.id_token as string;
+    window.location.href =
+			import.meta.env.VITE_ISSUER +
+			`oidc/logout?post_logout_redirect_uri=${encodeURIComponent(
+				window.location.origin
+			)}&id_token_hint=${idToken}`;
+  });
+</script>
+```
+
+The above code snippet showcases [one of the many ways](https://auth0.com/docs/authenticate/login/logout/log-users-out-of-auth0) to log out users from the Auth0 session layer.
+
+We need one more do one more configuration in our Auth0 application. We need to add the URL to the *Allowed Logout URLs* option. I am always redirecting users to the home page and hence I've given the URL of my root page, if you wish to redirect the user to any other page, that URL must be whitelisted here.
+
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1690471381211/618c3aed-a1d1-4756-ba85-f03a1a4adfb5.png align="center")
+
+We conclude this section on working with the sign-in and the sign-out flow. In the next section, I am going to demonstrate how to manage sessions in the application.
 
 ### Managing Session
 
-* As soon as the authentication is successful, SvelteKitAuth populates user session within *locals* that are accessible across the server-side code (i.e. *hooks.server.ts*, *+page.ts*, *+page.server.ts*, *+layout.ts*, *+layout.server.ts* and *+server.ts*). Here is the programmatic representation of the statement:
+As soon as the authentication is successful, SvelteKitAuth populates user sessions within *locals* that are accessible across the server-side code (i.e. *hooks.server.ts*, *+page.server.ts* and *+layout.server.ts*). Here is the programmatic representation of the statement:
+
+*src/hooks.server.ts*
+
+```typescript
+const config: SvelteKitAuthConfig = { ... }
+export const handle = SvelteKitAuth(config) satisfies Handle;
+```
+
+*src/routes/+layout.server.ts*
+
+We can access the session using `getSession()` method and create a global variable `session` The main reason behind using the layout file here is we want this data to be available to all the routes. What we return in the function `LayoutServerLoad` will be available inside the `$page` store, in the `data` property: `$`[`page.data`](http://page.data). In this case, we return an object with the '*session*' property which is what we are accessing in the other code paths.
+
+```typescript
+export const load: LayoutServerLoad = async (event) => {
+  const session = await event.locals.getSession();
+  return { session };
+};
+```
+
+In the *src/routes/+page.svelte.ts* file, we can access the session variable:
+
+```svelte
+<script>
+  import { page } from '$app/stores';
+</script>
+  
+{#if $page.data?.session?.user}
+  <span>Display User specific Information</span>
+{/if}
+```
+
+This mechanism allows us to handle authorization i.e. protect routes from unauthorized access. Example: **Handling Authorization Per Component**: The simplest case is protecting a single page, in which case you should put the logic in the `+page.server.ts` file.
+
+```typescript
+import { redirect } from "@sveltejs/kit";
+import type { PageServerLoad } from "./$types";
+
+export const load: PageServerLoad = async (event) => {
+  const session = await event.locals.getSession();
+  if (!session?.user) throw redirect(303, "/auth");
+  return {};
+};
+```
+
+We can also customize logic to handle authorization per path, I would strongly encourage readers to go through these three resources:
+
+* [Official Documentation](https://authjs.dev/reference/sveltekit#handling-authorization)
     
-    * *src/hooks.server.ts*
-        
-        ```typescript
-        const config: SvelteKitAuthConfig = { ... }
-        export const handle = SvelteKitAuth(config) satisfies Handle;
-        ```
-        
-    * *src/routes/+layout.server.ts* - We can access the session using `getSession()` method and create a global variable `session` The main reason behind using the layout file here is we want this data to be available to all the routes. What we return in the function `LayoutServerLoad` will be available inside the `$page` store, in the `data` property: `$`[`page.data`](http://page.data). In this case, we return an object with the '*session*' property which is what we are accessing in the other code paths.
-        
-        ```typescript
-        export const load: LayoutServerLoad = async (event) => {
-          const session = await event.locals.getSession();
-          return { session };
-        };
-        ```
-        
-    * *src/routes/+page.svelte.ts* - We can access the session variable
-        
-        ```typescript
-          <script>
-            import { page } from '$app/stores';
-          </script>
-          
-          {#if $page.data?.session?.user}
-            <span>Display User specific Information</span>
-          {/if}
-        ```
-        
-* This mechanism allows us to handle authorization i.e. protect routes from unauthorized access. Example: **Handling Authorization Per Component**: The simplest case is protecting a single page, in which case you should put the logic in the `+page.server.ts` file.
+* Youtube videos from the channel *Huntabyte* - [Video 1](https://youtu.be/K1Tya6ovVOI), [Video 2](https://youtu.be/UbhhJWV3bmI) and [Video 3](https://youtu.be/ieECVME5ZLU) in that order.
     
-    ```typescript
-    import { redirect } from "@sveltejs/kit";
-    import type { PageServerLoad } from "./$types";
-    
-    export const load: PageServerLoad = async (event) => {
-      const session = await event.locals.getSession();
-      if (!session?.user) throw redirect(303, "/auth");
-      return {};
-    };
-    ```
-    
-* We can also customize logic to handle authorization per path, I would strongly encourage readers to go through these three resources:
-    
-    * [Official Documentation](https://authjs.dev/reference/sveltekit#handling-authorization)
-        
-    * Youtube videos from the channel *Huntabyte* - [Video 1](https://youtu.be/K1Tya6ovVOI), [Video 2](https://youtu.be/UbhhJWV3bmI) and [Video 3](https://youtu.be/ieECVME5ZLU) in that order.
-        
 
 ### Conclusion
 
