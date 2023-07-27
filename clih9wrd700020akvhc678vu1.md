@@ -175,7 +175,7 @@ We conclude this section on working with built-in providers. In the next section
 
 #### Configuring SvelteKitAuth custom provider
 
-Before we begin, I want to point out that this section aims to showcase how a custom provider can be configured with SvelteKitAuth. In the previous section, we have already configured built-in providers, so if you want you can skip this section - [**Initiating sign-in and sign-out flow**](https://blog.aakashgoplani.in/sveltekit-authentication-using-sveltekitauth-and-oauth-providers-a-comprehensive-guide#heading-initiating-sign-in-and-sign-out-flow).
+Before we begin, I want to point out that this section aims to showcase how a custom provider can be configured with SvelteKitAuth. In the previous section, we have already configured built-in providers, so if you want you can skip this section - **Initiating sign-in and sign-out flow**.
 
 Here is the code snippet that we will be using in *src/hooks.server.ts.* Let us now deep dive into custom providers and the properties that are used within the provider.
 
@@ -445,7 +445,7 @@ export const load = (async ({ fetch, locals, url: _url }) => {
 }) satisfies PageServerLoad;
 ```
 
-NOTE: After signing out, we must reload the page. If we use inbuild `signOut()` the SvelteKitAuth auto reloads the page and redirects to the *callbackUrl* or to the URL that initiated the sign-in request. Since we programmatically logged users out, it is our responsibility to reload the page once.
+**NOTE**: After signing out, we must reload the page. If we use inbuild `signOut()` the SvelteKitAuth auto reloads the page and redirects to the *callbackUrl* or to the URL that initiated the sign-in request. Since we programmatically logged users out, it is our responsibility to reload the page once.
 
 ```svelte
 <script lang="ts">
