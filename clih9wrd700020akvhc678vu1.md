@@ -335,6 +335,7 @@ Although this is more than enough if you still want to deep dive into more optio
 You can also programmatically sign-in user:
 
 ```typescript
+// -> src/routes/login/+page.server.ts file
 import type { PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 
@@ -404,6 +405,7 @@ Like `signIn()` method, you can pass a *callbackURL* and *redirect* option. More
 You can programmatically sign out the user as well:
 
 ```typescript
+// -> src/routes/logout/+page.server.ts file
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
@@ -448,6 +450,7 @@ export const load = (async ({ fetch, locals, url: _url }) => {
 **NOTE**: After signing out, we must reload the page. If we use inbuild `signOut()` the SvelteKitAuth auto reloads the page and redirects to the *callbackUrl* or to the URL that initiated the sign-in request. Since we programmatically logged users out, it is our responsibility to reload the page once.
 
 ```svelte
+<!-- src/routes/logout/+page.svelte file -->
 <script lang="ts">
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
@@ -480,6 +483,7 @@ You can verify the above statement in the following way:
 This proves that the user session was still active in the Auth0 session layer. If you want to clear the user session on Auth0's session layer as well, you will have to logout the user out of Auth0 using the OIDC endpoint.
 
 ```svelte
+<!-- src/routes/logout/+page.svelte file -->
 <script lang="ts">
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
