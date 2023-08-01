@@ -480,7 +480,7 @@ const config: Config<Partial<Params>> = {
 
 Finally, we were able to localize our application using *sveltekit-i18n*. You can find the code in the [GitHub repo](https://github.com/aakash14goplani/sveltekit-with-sveltekiti18n) and [link](https://sveltekit-with-sveltekiti18n.vercel.app/) to the live demo.
 
-This was the second article of [four-part series](https://blog.aakashgoplani.in/series/i18n-in-sveltekit) to demonstrate i18n in SvelteKit. In the next article, I'll be explaining i18n in SvelteKit with *typesafe-i18n*.
+This was the second article of [four-part series](https://blog.aakashgoplani.in/series/i18n-in-sveltekit) to demonstrate i18n in SvelteKit. In the next article, I'll be explaining [i18n in SvelteKit with *typesafe-i18n*](https://blog.aakashgoplani.in/internationalization-in-sveltekit-using-typesafe-i18n).
 
 ### References
 
