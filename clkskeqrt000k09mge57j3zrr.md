@@ -1,10 +1,10 @@
 ---
-title: "Internationalization in SvelteKit using typesafe-i18n"
+title: "Internationalization in SvelteKit with typesafe-i18n"
 seoTitle: "Internationalization in SvelteKit with typesafe-i18n"
 seoDescription: "Internationalization in SvelteKit with typesafe-i18n, i18n in SvelteKit, Localization in SvelteKit, Translations in Sveltekit, typesafe-i18n"
 datePublished: Tue Aug 01 2023 17:20:25 GMT+0000 (Coordinated Universal Time)
 cuid: clkskeqrt000k09mge57j3zrr
-slug: internationalization-in-sveltekit-using-typesafe-i18n
+slug: internationalization-in-sveltekit-with-typesafe-i18n
 tags: internationalization, i18n, localization, sveltekit, typesafe-i18n
 
 ---
