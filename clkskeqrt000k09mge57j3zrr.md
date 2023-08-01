@@ -9,7 +9,7 @@ tags: internationalization, i18n, localization, sveltekit, typesafe-i18n
 
 ---
 
-This is the third article of [four-part series](https://blog.aakashgoplani.in/series/i18n-in-sveltekit) to demonstrate i18n in SvelteKit. In the [previous article](https://blog.aakashgoplani.in/internationalization-in-sveltekit-with-sveltekit-i18n), we worked our way with *sveltekit-i18n* and in this article, we will work on integrating *typesafe-i18n* with SvelteKit.
+This is the final article of [three-part series](https://blog.aakashgoplani.in/series/i18n-in-sveltekit) to demonstrate i18n in SvelteKit. In the [previous article](https://blog.aakashgoplani.in/internationalization-in-sveltekit-with-sveltekit-i18n), we worked our way with *sveltekit-i18n* and in this article, we will work on integrating *typesafe-i18n* with SvelteKit.
 
 The *typesafe-i18n* is a fully type-safe and lightweight internationalization library for all your TypeScript and JavaScript projects. One thing that makes *typesafe-i18n* stand out is that it is a generic library and not limited to Svelte, you can use it with any of your JavaScript or TypeScript projects.
 
@@ -476,7 +476,7 @@ The last step is to just invoke `$LL()` and pass relevant arguments.
 
 Finally, we were able to localize our application using *typesafe-i18n*. You can find the code in the [GitHub repo](https://github.com/aakash14goplani/sveltekit-with-typesafe18n) and [link](https://sveltekit-with-typesafei18n.vercel.app/) to the live demo.
 
-This was the third article of [four-part series](https://blog.aakashgoplani.in/series/i18n-in-sveltekit) to demonstrate i18n in SvelteKit. In the next and final article, I'll be explaining i18n in SvelteKit with *inlang-sdk*.
+This was the final article of [three-part series](https://blog.aakashgoplani.in/series/i18n-in-sveltekit) to demonstrate i18n in SvelteKit. In the next article, I'll be comparing three libraries: svelte-i18n, sveltekit-i18n and typesafe-i18n.
 
 ## References
 
