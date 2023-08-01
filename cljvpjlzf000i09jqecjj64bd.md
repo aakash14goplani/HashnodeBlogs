@@ -57,7 +57,7 @@ Here are a few alternatives using which we can mitigate this problem:
     ```typescript
     export async function load({ fetch }) {
       const response = await fetch('/api/user');
-      // NEVER DO THIS!
+      // INSTEAD DO THIS!
       return {
         user: await response.json()
       }
