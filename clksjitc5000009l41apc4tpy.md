@@ -415,7 +415,7 @@ Coming back to our example application, we can now format date, time and currenc
 
 Finally, we were able to localize our application using *svelte-i18n*. You can find the code in the [GitHub repo](https://github.com/aakash14goplani/sveltekit-with-sveltei18n) and [link](https://sveltekit-with-sveltei18n.vercel.app/) to the live demo.
 
-This was the first article of [four-part series](https://blog.aakashgoplani.in/series/i18n-in-sveltekit) to demonstrate i18n in SvelteKit. In the next article, I'll be explaining i18n in SvelteKit with *sveltekit-i18n* library
+This was the first article of [four-part series](https://blog.aakashgoplani.in/series/i18n-in-sveltekit) to demonstrate i18n in SvelteKit. In the next article, I'll be explaining [i18n in SvelteKit with *sveltekit-i18n* library](https://blog.aakashgoplani.in/internationalization-in-sveltekit-with-sveltekit-i18n).
 
 ### References
 
