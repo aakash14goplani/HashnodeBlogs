@@ -476,7 +476,7 @@ The last step is to just invoke `$LL()` and pass relevant arguments.
 
 Finally, we were able to localize our application using *typesafe-i18n*. You can find the code in the [GitHub repo](https://github.com/aakash14goplani/sveltekit-with-typesafe18n) and [link](https://sveltekit-with-typesafei18n.vercel.app/) to the live demo.
 
-This was the final article of [three-part series](https://blog.aakashgoplani.in/series/i18n-in-sveltekit) to demonstrate i18n in SvelteKit. In the next article, I'll be comparing three libraries: svelte-i18n, sveltekit-i18n and typesafe-i18n.
+This was the final article of [three-part series](https://blog.aakashgoplani.in/series/i18n-in-sveltekit) to demonstrate i18n in SvelteKit. In the [next article](https://blog.aakashgoplani.in/comparing-i18n-libraries-in-sveltekit-svelte-i18n-sveltekit-i18n-and-typesafe-i18n), I'll be comparing three libraries: svelte-i18n, sveltekit-i18n and typesafe-i18n.
 
 ## References
 
