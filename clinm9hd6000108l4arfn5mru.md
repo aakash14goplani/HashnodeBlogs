@@ -129,19 +129,20 @@ SvelteKit uses a filesystem-based router. Files named `+layout.svelte` determine
 ***src/routes/+layout.svelte***
 
 ```svelte
-<Breadcrumb path={$page.url.pathname} />
+<Breadcrumb />
 ```
 
 ***src/lib/components/Breadcrumb.svelte***
 
 ```svelte
 <script lang="ts">
-  export let path: string;
+  import { page } from '$app/stores';
+
   let crumbs: Array<{ label: string, href: string }> = [];
 
   $: {
     // Remove zero-length tokens.
-    const tokens = path.split('/').filter((t) => t !== '');
+    const tokens = $page.url.pathname.split('/').filter((t) => t !== '');
 
     // Create { label, href } pairs for each token.
     let tokenPath = '';
@@ -185,6 +186,52 @@ SvelteKit uses a filesystem-based router. Files named `+layout.svelte` determine
     }
   }
 </style>
+```
+
+In the above snippet, the `label` corresponds to the last token of the page URL, e.g., if the page URL is `/sports/cricket`, the value of the `label` will be *cricket*. If you wish to override this, you can return an object with the `label` property from the corresponding *+page.ts* file.
+
+Let's see that in action - so for folder structure:
+
+```abap
+src
+  routes
+    sports
+      cricket
+        +page.svelte
+        +page.ts
+```
+
+```typescript
+import type { PageLoad } from "../$types";
+
+export const load = (async () => {
+  return {
+    showBreadcrumb: true,
+    label: 'Cricket World Cup 2023'
+  };
+}) satisfies PageLoad;
+```
+
+Accordingly, we can modify our *Breadcrumb* component to fetch label from `$page.data`
+
+```svelte
+<script lang="ts">
+...
+let tokenPath = '';
+crumbs = tokens.map((t) => {
+  tokenPath += '/' + t;
+  t = t.charAt(0).toUpperCase() + t.slice(1);
+  return {
+    label: $page.data.label || t,
+    href: tokenPath
+  };
+});
+...
+</script>
+
+{#if $page.data.showBreadcrumb}
+...
+{/if}
 ```
 
 ### Wrapping Up
