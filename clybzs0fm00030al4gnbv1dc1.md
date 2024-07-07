@@ -139,4 +139,4 @@ We detailed the steps involved in the sign-in flow, including preparing the payl
 
 By understanding both client-side and server-side authentication processes, you are now equipped to implement robust and flexible authentication mechanisms in your applications.
 
-Here is the link to the [**GitHub repository**](https://github.com/aakash14goplani/SvelteKitAuth) with the codebase. In the next section, we will explore the differences between signing out a user from the application versus signing out from the OAuth provider, providing further insights into managing user sessions effectively.
+Here is the link to the [**GitHub repository**](https://github.com/aakash14goplani/SvelteKitAuth) with the codebase. In the next section, we will explore [the differences between signing out a user from the application versus signing out from the OAuth provider](https://blog.aakashgoplani.in/user-sign-out-application-vs-oauth-provider), providing further insights into managing user sessions effectively.
