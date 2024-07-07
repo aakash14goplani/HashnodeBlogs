@@ -69,4 +69,4 @@ Like the `signIn()` method, you can pass a *callbackURL* and *redirect* option. 
 
 In this article, we explored the client-side sign-in and sign-out processes using SvelteKitAuth. By leveraging the `signIn()` and `signOut()` methods from `@auth/sveltekit/client`, we can streamline the authentication flow, providing a seamless user experience. Whether specifying a provider, handling callbacks, or managing errors, these methods offer flexibility and control.
 
-Here is the link to the [**GitHub repository**](https://github.com/aakash14goplani/SvelteKitAuth) with the codebase. In the next section, we will go through server-side sign-in and sign-out flow.
+Here is the link to the [**GitHub repository**](https://github.com/aakash14goplani/SvelteKitAuth) with the codebase. In the next section, we will go through [server-side sign-in and sign-out flow](https://blog.aakashgoplani.in/optimizing-server-side-login-and-logout-processes).
