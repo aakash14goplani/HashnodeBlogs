@@ -1,10 +1,10 @@
 ---
-title: "Step-by-Step Guide to Using built-in (Auth0) OAuth provider with SvelteKit"
+title: "Step-by-Step Guide to Using built-in (Auth0) OAuth provider with SvelteKitAuth"
 seoTitle: "Auth0 OAuth Setup with SvelteKitAuth Authjs guide"
 seoDescription: "Integrate Auth0 OAuth with SvelteKit. Learn to configure properties, set environment variables, and ensure secure authentication for your application"
 datePublished: Sun Jul 07 2024 18:49:21 GMT+0000 (Coordinated Universal Time)
 cuid: clybwql78000c09jq655t3bbm
-slug: step-by-step-guide-to-using-built-in-auth0-oauth-provider-with-sveltekit
+slug: step-by-step-guide-to-using-built-in-auth0-oauth-provider-with-sveltekitauth
 tags: oauth, auth0, sveltekit, sveltekitauth
 
 ---
