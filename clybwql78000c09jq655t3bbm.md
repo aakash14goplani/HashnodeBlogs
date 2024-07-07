@@ -9,7 +9,11 @@ tags: oauth, auth0, sveltekit, sveltekitauth
 
 ---
 
-In the [previous article](https://blog.aakashgoplani.in/setting-up-auth0-and-adding-sveltekitauth-to-your-app), we covered the basics of SvelteKitAuth. In this article, we will delve into integrating the built-in OAuth provider with SvelteKit. Below is the code snippet for using the built-in Auth0 OAuth provider:
+In the [previous article](https://blog.aakashgoplani.in/setting-up-auth0-and-adding-sveltekitauth-to-your-app), we covered the basics of SvelteKitAuth. In this article, we will delve into integrating the built-in OAuth provider with SvelteKit.
+
+### Basic Configuration
+
+Below is the code snippet for using the built-in Auth0 OAuth provider:
 
 ```typescript
 // hooks.server.ts
