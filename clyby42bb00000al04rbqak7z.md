@@ -89,4 +89,4 @@ We can switch the providers based on the `id` example:
 
 In conclusion, integrating multiple OAuth providers in SvelteKitAuth significantly enhances user experience by offering diverse sign-in options. This flexibility not only improves user convenience but also broadens the potential user base by accommodating various preferences. By following the outlined steps, developers can seamlessly configure multiple providers, ensuring a smooth and secure authentication process.
 
-Here is the link to the [**GitHub repository**](https://github.com/aakash14goplani/SvelteKitAuth) with the codebase. In the next section, we will delve into initiating client-side sign-in and sign-out flows, further streamlining the user authentication journey.
+Here is the link to the [**GitHub repository**](https://github.com/aakash14goplani/SvelteKitAuth) with the codebase. In the next article, we will learn how to enhance [custom typings with SvelteKitAuth](https://blog.aakashgoplani.in/enhancing-sveltekitauth-with-custom-type-additions).
