@@ -159,3 +159,5 @@ The client can access this information using the `$page.data` property.
 ### Conclusion
 
 In this article, we explored the process of exchanging data between the client and server using SvelteKitAuth. We delved into the importance of JWT and session callbacks, and how to effectively synchronize and store sessions. By configuring the `jwt` and `session` callbacks, creating an update endpoint, and initiating update requests from the client, we ensured seamless data synchronization from the client to the server. Additionally, we discussed how the server can send information back to the client through hydration using server load functions. By following these steps, you can maintain a consistent and secure data exchange between the client and server in your SvelteKit applications.
+
+Here is the link to the [**GitHub repository**](https://github.com/aakash14goplani/SvelteKitAuth) with the codebase. In the next article, we will learn to how to build custom pages and handle events in SvelteKitAuth.
