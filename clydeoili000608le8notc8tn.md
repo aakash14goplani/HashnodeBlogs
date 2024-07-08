@@ -11,7 +11,7 @@ tags: sveltekit, client-server-communication, sveltekitauth, authjs
 
 In this article, we will explore how to exchange data between the client and server using SvelteKitAuth. We will delve into the importance of JWT and session callbacks, and how to synchronize and store sessions effectively.
 
-### Updating and Syncing data from the client to the server
+### Updating and Syncing data from the Client to the Server
 
 Since the `SvelteKitAuthConfig` is attached to the hooks, it triggers with every API call that is intercepted by the hooks. The `SvelteKitAuthConfig` comes with two important callback functions, i.e., `jwt` and `session`, that trigger on every network request intercepted by the hooks.
 
