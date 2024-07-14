@@ -9,6 +9,8 @@ tags: authentication, auth0, sveltekit, sveltekitauth
 
 ---
 
+> **NOTE**: The contents of this article are now outdated. Please refer the updated content here: [Authentication in SvelteKit using SvelteKitAuth](https://blog.aakashgoplani.in/series/sveltekitauth-sveltekit)
+
 There are multiple ways in which we can authenticate a user over the web, few of them are: matching user credentials in the database, delegating responsibility to an external OAuth provider etc. We can extend those similar concepts in SvelteKit too and implement authentication.
 
 SvelteKit does not provide out-of-box authentication. We can extend the means that we discussed above and implement authentication in SvelteKit. This guide will focus on implementing authentication in SvelteKit using SvelteKitAuth and OAuth providers. After reading this guide, you'll have a decent understanding of implementing authentication mechanisms in SvelteKit.
@@ -562,6 +564,8 @@ We can also customize logic to handle authorization per path, I would strongly e
     
 
 ### Conclusion
+
+> **NOTE**: The contents of this article are now outdated. Please refer the updated content here: [Authentication in SvelteKit using SvelteKitAuth](https://blog.aakashgoplani.in/series/sveltekitauth-sveltekit)
 
 We have seen how to configure SvelteKitAuth with the OAuth provider and achieve a seamless authentication experience. Here is the [link](https://svelte-kit-auth0-next-auth.vercel.app/) for the official demo of this tutorial and [codebase](https://github.com/aakash14goplani/SvelteKit-Auth0-NextAuth). As an extension to this article, I have included one more example of authentication in SvelteKitAuth using the Salesforce provider in a separate [blog post](https://blog.aakashgoplani.in/sveltekitauth-with-salesforce-oauth-provider).
 
